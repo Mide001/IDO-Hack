@@ -3,7 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "./IERC20.sol";
-import "./SafeMath‎.sol";
+import "./SafeMath.sol";
 
 contract IDOLaunchpad {
     using SafeMath for uint256;
@@ -77,14 +77,14 @@ contract IDOLaunchpad {
     function withdrawUnsoldTokens() external onlyOwner {
         require(!isSaleActive, "Sale is still active");
         uint256 unsoldTokens = memeCoinToken.balanceOf(address(this)).sub(totalTokensSold);
-        memeCoinToken.transferFrom(owner, unsoldTokens);
+        memeCoinToken.transfer(owner, unsoldTokens);
     }
 
     function claimTokens() external {
         require(!isSaleActive, "Sale is still active");
         require(tokensPurchased[msg.sender] > 0, "No tokens to claim");
 
-        uint256 tokensToClaim = TokensPurchased[msg.sender];
+        uint256 tokensToClaim = tokensPurchased[msg.sender];
         tokensPurchased[msg.sender] = 0;
         memeCoinToken.transfer(msg.sender, tokensToClaim);
     }
